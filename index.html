@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Chatbot</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+    .bg-video {
+        position: relative; /* or absolute */
+        width: 100%;
+        height: auto;
+        z-index: 0;
+        display: block;
+    }
+      
+    video {
+      z-index: 0;
+    }
+    
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+
+    <!-- .chat-container {
+      width: 550px;
+      height: 640px;
+      background: rgba(245, 222, 179, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      position: fixed;
+      top: 50%;
+      right: 3%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    } -->
+    .chat-container {
+      width: 550px;
+      height: 640px;
+      background: rgba(245, 222, 179, 0.9);
+      border-radius: 15px;
+      padding: 10px;
+      position: fixed;
+      top: 50%;
+      right: 3%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      /* Glowing outer shadow */
+      box-shadow: 0 0 20px 6px rgba(255, 165, 0, 0.5);
+      animation: glowAround 2s ease-in-out infinite alternate;
+    }
+    
+
+    .chat-container:hover {
+      transform: translateY(-50%) scale(1.02);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .chat-header {
+      background: #8b4513;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+
+    <!-- .chat-box {
+      height: 470px;
+      overflow-y: auto;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(245, 222, 179, 0.9); /* Skyblue */
+      border-radius: 10px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    } -->
+    .chat-box {
+      height: 470px;
+      overflow-y: auto;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(245, 222, 179, 0.9); /* light warm */
+      border-radius: 10px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1),
+                  0 0 15px 4px rgba(255, 165, 0, 0.5); /* outer glow */
+      animation: glowBox 2s ease-in-out infinite alternate;
+    }
+    
+
+    .chat-message {
+      padding: 12px;
+      margin: 8px;
+      border-radius: 20px;
+      max-width: 70%;
+      animation: fadeIn 0.4s ease-in-out;
+      font-size: 16px;
+    }
+
+    .user-message {
+      background: #8b4513;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .bot-message {
+      background: #e0f7ff; /* light blue for bot */
+      color: black;
+      align-self: flex-start;
+    }
+
+    .chat-input-container {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.5);
+      color: black;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .send-button {
+      background: #8b4513;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .send-button:hover {
+      background: #a0522d;
+      box-shadow: 0 0 10px #ffa500, 0 0 20px #ffa500;
+    }
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glowBox {
+      0% {
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1),
+                    0 0 15px 4px rgba(255, 165, 0, 0.5);
+      }
+      100% {
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1),
+                    0 0 25px 6px rgba(255, 140, 0, 0.7);
+      }
+    }
+    @keyframes glowAround {
+      0% {
+        box-shadow: 0 0 20px 6px rgba(87, 45, 25, 0.793);
+      }
+      100% {
+        box-shadow: 0 0 30px 10px rgba(87, 45, 25, 0.793);
+      }
+    }
+    
+    
+  </style>
+</head>
+<body>
+
+  <!-- Background video -->
+  <video autoplay muted loop class="bg-video">
+    <source src="/static/video/dog_bg.mp4" type="video/mp4">
+  </video>
+  
+  
+
+  <!-- Chatbot container -->
+  <div class="chat-container">
+    <div class="chat-header">🐶 AI Dog Assistant 🐶</div>
+    <div class="chat-box" id="chat-box">
+      <div class="chat-message bot-message">Hello! How can I assist you today?</div>
+    </div>
+    <div class="chat-input-container">
+      <input type="text" id="chat-input" class="chat-input" placeholder="Type a message...">
+      <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const chatInput = document.getElementById("chat-input");
+    const chatBox = document.getElementById("chat-box");
+
+    function displayMessage(message, sender) {
+        const messageWrapper = document.createElement("div");
+        messageWrapper.classList.add("chat-message", sender === "user" ? "user-message" : "bot-message");
+        messageWrapper.textContent = message;
+        chatBox.appendChild(messageWrapper);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const userMessage = chatInput.value.trim();
+        if (userMessage === "") return;
+
+        displayMessage(userMessage, "user");
+        chatInput.value = "";
+
+        try {
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage }),
+            });
+
+            const data = await response.json();
+            displayMessage(data.response, "bot");
+        } catch (error) {
+            console.error("Error:", error);
+            displayMessage("⚠️ Sorry, something went wrong!", "bot");
+        }
+    }
+
+ 
+
+    document.querySelector(".send-button").addEventListener("click", sendMessage);
+
+    chatInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>

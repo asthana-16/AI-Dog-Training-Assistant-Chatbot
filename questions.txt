@@ -1,0 +1,89 @@
+should give answer--->
+How do I train my dog to sit?
+
+How do I teach my dog to stay?
+
+What's the best way to teach "fetch"?
+
+How do I train my dog to come when called?
+
+What does "heel" mean in dog training?
+
+How do I teach my dog to lie down?
+
+How do I train my dog not to bite?
+
+How do I stop my dog from barking?
+
+How do I teach my dog "leave it"?
+
+How do I teach my dog to spin or roll over?
+Why is my dog barking all the time?
+
+My dog jumps on people—how can I stop it?
+
+
+Why does my dog chew on furniture?
+
+Why does my dog dig holes?
+
+My dog whines constantly—what should I do?
+
+How do I deal with an aggressive dog?
+What should I feed my puppy?
+
+Can dogs eat carrots?
+
+How often should I feed my dog?
+
+What foods are dangerous for dogs?
+
+What’s the best dog treat for training?
+
+My dog has food allergies—what can I do?
+How often should my dog see the vet?
+
+When should I vaccinate my dog?
+
+How much exercise does my dog need?
+
+How do I groom my dog?
+
+How do I prevent ticks and fleas?
+
+Should I brush my dog's teeth?
+Tell me about labradors.
+
+What are golden retrievers like?
+
+Are german shepherds good for families?
+
+What's a beagle's personality like?
+
+Are bulldogs lazy?
+Hi
+
+Hello
+
+Hey
+
+
+
+should not answer---->
+What’s the weather today?
+
+Who is the Prime Minister of India?
+
+Can you solve a math problem for me?
+
+What’s the capital of France?
+
+Tell me a joke.
+
+Who won the cricket match yesterday?
+
+How do I cook biryani?
+
+What’s the stock price of TCS?
+
+What can I do if my dog has anxiety?
